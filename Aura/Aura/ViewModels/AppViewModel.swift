@@ -15,7 +15,7 @@ class AppViewModel: ObservableObject {
     }
     
     var authenticationViewModel: AuthenticationViewModel {
-        return AuthenticationViewModel { [weak self] in
+        return AuthenticationViewModel(apiService: APIClient()) { [weak self] in
             self?.isLogged = true
         }
     }

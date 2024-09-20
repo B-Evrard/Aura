@@ -70,7 +70,6 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    AuthenticationView(viewModel: AuthenticationViewModel({
-        
-    }))
+    let viewModel = AuthenticationViewModel(apiService: APIClient(), <#() -> ()#>)
+    AuthenticationView(viewModel: viewModel)
 }

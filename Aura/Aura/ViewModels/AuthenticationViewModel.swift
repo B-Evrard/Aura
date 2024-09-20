@@ -13,8 +13,13 @@ class AuthenticationViewModel: ObservableObject {
     
     let onLoginSucceed: (() -> ())
     
-    init(_ callback: @escaping () -> ()) {
+    private let apiService: APIService
+    
+    
+    init(apiService: APIService, _ callback: @escaping () -> ()) {
         self.onLoginSucceed = callback
+        self.apiService = apiService
+        
     }
     
     func login() {
