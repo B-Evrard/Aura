@@ -8,7 +8,9 @@
 import Foundation
 
 enum APIError: Error {
-    case invalidResponse(response: HTTPURLResponse, data: Data)
-    case invalidData(data: Data)
-    case invalidURL(url: URL)
+    case invalidResponse
+    case invalidData
+    case invalidURL
+    case authenticationFailed
+    case unauthorized
 }

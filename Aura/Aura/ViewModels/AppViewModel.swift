@@ -7,20 +7,23 @@
 
 import Foundation
 
+
 class AppViewModel: ObservableObject {
     @Published var isLogged: Bool
+    @Published var user: User?
     
     init() {
         isLogged = false
     }
     
     var authenticationViewModel: AuthenticationViewModel {
-        return AuthenticationViewModel(apiService: APIClient()) { [weak self] in
-            self?.isLogged = true
+        return AuthenticationViewModel(apiService: APIClient()) { user in
+            self.isLogged = true
+            self.user = user
         }
     }
     
     var accountDetailViewModel: AccountDetailViewModel {
-        return AccountDetailViewModel()
+        return AccountDetailViewModel(apiService: APIClient(),user: self.user!)
     }
 }

@@ -9,6 +9,8 @@ import Foundation
 
 protocol APIService {
     
-    func authentication(user: User) -> User 
+    func authentication(user: User) async throws -> User
+    
+    func getAccount(user: User) async throws -> Account
     
 }

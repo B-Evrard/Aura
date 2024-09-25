@@ -11,19 +11,47 @@ class AuthenticationViewModel: ObservableObject {
     @Published var username: String = ""
     @Published var password: String = ""
     
-    let onLoginSucceed: (() -> ())
+    @Published var isAlert = false
+    @Published var messageAlert: String = ""
+    
+    @Published var user = User(username: "",password: "",token: "")
+    
+    let onLoginSucceed: ((User) -> Void)
     
     private let apiService: APIService
     
     
-    init(apiService: APIService, _ callback: @escaping () -> ()) {
+    init(apiService: APIService, _ callback: @escaping (User) -> Void) {
         self.onLoginSucceed = callback
         self.apiService = apiService
-        
     }
     
-    func login() {
-        print("login with \(username) and \(password)")
-        onLoginSucceed()
+    @MainActor
+    func login() async {
+        
+        self.isAlert = false
+        self.user.username = username
+        self.user.password = password
+        do {
+            self.user = try await apiService.authentication(user: user)
+        } catch let error as APIError {
+            isAlert = true
+            switch error {
+            case .authenticationFailed :
+                messageAlert = "Authentification invalide"
+                
+            default : messageAlert = "Une erreur est survenue"
+            }
+            return
+        } catch {
+            isAlert = true
+            messageAlert = "Une erreur est survenue"
+        }
+        onLoginSucceed(user)
+        
+        
+        
+       
+        
     }
 }
