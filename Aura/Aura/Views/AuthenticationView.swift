@@ -9,9 +9,6 @@ import SwiftUI
 
 struct AuthenticationView: View {
     
-//    @State private var username: String = ""
-//    @State private var password: String = ""
-    
     let gradientStart = Color(hex: "#94A684").opacity(0.7)
     let gradientEnd = Color(hex: "#94A684").opacity(0.0) // Fades to transparent
 
@@ -68,7 +65,7 @@ struct AuthenticationView: View {
         .onTapGesture {
             self.endEditing(true)  // This will dismiss the keyboard when tapping outside
         }
-        .alert(viewModel.messageAlert, isPresented: $viewModel.isAlert) {
+        .alert(viewModel.messageAlert, isPresented: $viewModel.isAlert  ) {
             Button("OK") { }
         }
     }

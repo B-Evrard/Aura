@@ -80,6 +80,5 @@ struct AccountDetailView: View {
 }
 
 #Preview {
-    let user = User(username: "",password: "",token: "")
-    AccountDetailView(viewModel: AccountDetailViewModel(apiService: APIClient(),user: user))
+    AccountDetailView(viewModel: AccountDetailViewModel(apiService: APIClient()))
 }

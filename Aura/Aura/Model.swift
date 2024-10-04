@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct User {
+struct User : Decodable {
     var username: String
     var password: String
     var token: String
 }
 
-struct Account: Codable {
+struct Account: Decodable {
     
     var totalAmount: Double
     var transactions: [Transaction]
@@ -30,7 +30,7 @@ struct Account: Codable {
     
 }
 
-struct Transaction: Codable {
+struct Transaction: Decodable {
     var description: String
     var amount: Double
     
@@ -44,3 +44,10 @@ struct Transaction: Codable {
           case amount = "value"
     }
 }
+
+struct Transfer: Decodable {
+    var recipient: String
+    var amount: String
+}
+
+

@@ -12,10 +12,10 @@ extension View {
         //UIApplication.shared.windows.forEach { $0.endEditing(force)}
       
         let windowScenes = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene }) // Récupère toutes les scènes de type UIWindowScene
+            .compactMap({ $0 as? UIWindowScene })
         windowScenes.forEach { windowScene in
             windowScene.windows.forEach { window in
-                window.endEditing(force)  // Ferme l'édition active dans chaque fenêtre
+                window.endEditing(force)
             }
         }
         

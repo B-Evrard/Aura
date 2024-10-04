@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,12 +19,14 @@
 		53D4189D2AC715AA0070ADB1 /* AccountDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4189C2AC715AA0070ADB1 /* AccountDetailViewModel.swift */; };
 		53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */; };
 		53D418A12AC71B8F0070ADB1 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D418A02AC71B8F0070ADB1 /* View+Extensions.swift */; };
+		FE03B6AA2CA6DB770065CD56 /* APIClientCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE03B6A92CA6DB770065CD56 /* APIClientCore.swift */; };
 		FE5CD4352C9D9766008A4941 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5CD4342C9D9766008A4941 /* APIService.swift */; };
 		FE5CD4372C9D9C61008A4941 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5CD4362C9D9C61008A4941 /* APIClient.swift */; };
-		FE5CD43A2C9D9D26008A4941 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5CD4392C9D9D26008A4941 /* APIError.swift */; };
 		FE5CD43C2C9DA292008A4941 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5CD43B2C9DA292008A4941 /* Model.swift */; };
 		FE5CD43E2C9DB54D008A4941 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5CD43D2C9DB54D008A4941 /* Environment.swift */; };
 		FEC5F3322CA400A000B2BFB1 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5F3312CA400A000B2BFB1 /* Double+Extensions.swift */; };
+		FEC5F3362CA44FDA00B2BFB1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5F3352CA44FDA00B2BFB1 /* Utils.swift */; };
+		FEF2358C2CAE968000DB9376 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF2358B2CAE968000DB9376 /* Action.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,13 +43,19 @@
 		53D4189C2AC715AA0070ADB1 /* AccountDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailViewModel.swift; sourceTree = "<group>"; };
 		53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTransferViewModel.swift; sourceTree = "<group>"; };
 		53D418A02AC71B8F0070ADB1 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		FE03B6A92CA6DB770065CD56 /* APIClientCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientCore.swift; sourceTree = "<group>"; };
 		FE5CD4342C9D9766008A4941 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		FE5CD4362C9D9C61008A4941 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		FE5CD4392C9D9D26008A4941 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FE5CD43B2C9DA292008A4941 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Model.swift; path = Aura/Model.swift; sourceTree = SOURCE_ROOT; };
 		FE5CD43D2C9DB54D008A4941 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		FEC5F3312CA400A000B2BFB1 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		FEC5F3352CA44FDA00B2BFB1 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		FEF2358B2CAE968000DB9376 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FEC5F3372CA450AB00B2BFB1 /* Errors */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Errors; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		53D418752AC7099A0070ADB1 /* Frameworks */ = {
@@ -79,6 +87,7 @@
 		53D4187A2AC7099A0070ADB1 /* Aura */ = {
 			isa = PBXGroup;
 			children = (
+				FEC5F3372CA450AB00B2BFB1 /* Errors */,
 				53D418962AC70FC50070ADB1 /* Utils */,
 				53D4188B2AC709B80070ADB1 /* Models */,
 				53D4188A2AC709B30070ADB1 /* ViewModels */,
@@ -135,6 +144,7 @@
 				53D418982AC70FD80070ADB1 /* Color+Extensions.swift */,
 				53D418A02AC71B8F0070ADB1 /* View+Extensions.swift */,
 				FEC5F3312CA400A000B2BFB1 /* Double+Extensions.swift */,
+				FEC5F3352CA44FDA00B2BFB1 /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -144,7 +154,8 @@
 			children = (
 				FE5CD4342C9D9766008A4941 /* APIService.swift */,
 				FE5CD4362C9D9C61008A4941 /* APIClient.swift */,
-				FE5CD4392C9D9D26008A4941 /* APIError.swift */,
+				FE03B6A92CA6DB770065CD56 /* APIClientCore.swift */,
+				FEF2358B2CAE968000DB9376 /* Action.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -163,6 +174,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				FEC5F3372CA450AB00B2BFB1 /* Errors */,
 			);
 			name = Aura;
 			productName = Aura;
@@ -220,21 +234,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				53D4187C2AC7099A0070ADB1 /* AuraApp.swift in Sources */,
+				FEF2358C2CAE968000DB9376 /* Action.swift in Sources */,
 				53D418952AC70ABF0070ADB1 /* MoneyTransferView.swift in Sources */,
 				53D4189B2AC711990070ADB1 /* AuthenticationViewModel.swift in Sources */,
 				53D4189D2AC715AA0070ADB1 /* AccountDetailViewModel.swift in Sources */,
+				FE03B6AA2CA6DB770065CD56 /* APIClientCore.swift in Sources */,
 				FE5CD43E2C9DB54D008A4941 /* Environment.swift in Sources */,
 				53D418912AC70A920070ADB1 /* AuthenticationView.swift in Sources */,
 				53D418932AC70AB10070ADB1 /* AccountDetailView.swift in Sources */,
 				53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */,
 				FEC5F3322CA400A000B2BFB1 /* Double+Extensions.swift in Sources */,
+				FEC5F3362CA44FDA00B2BFB1 /* Utils.swift in Sources */,
 				FE5CD43C2C9DA292008A4941 /* Model.swift in Sources */,
 				53D4188D2AC709F40070ADB1 /* AppViewModel.swift in Sources */,
 				FE5CD4352C9D9766008A4941 /* APIService.swift in Sources */,
 				53D418A12AC71B8F0070ADB1 /* View+Extensions.swift in Sources */,
 				53D418992AC70FD80070ADB1 /* Color+Extensions.swift in Sources */,
 				FE5CD4372C9D9C61008A4941 /* APIClient.swift in Sources */,
-				FE5CD43A2C9D9D26008A4941 /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

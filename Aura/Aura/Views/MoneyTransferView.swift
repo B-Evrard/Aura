@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MoneyTransferView: View {
-    @ObservedObject var viewModel = MoneyTransferViewModel()
+    @ObservedObject var viewModel: MoneyTransferViewModel
 
         @State private var animationScale: CGFloat = 1.0
 
@@ -52,7 +52,12 @@ struct MoneyTransferView: View {
                         .keyboardType(.decimalPad)
                 }
 
-                Button(action: viewModel.sendMoney) {
+                Button(action:  {
+                    // Handle authentication logic here
+                    Task {
+                        await viewModel.sendMoney()                    }
+                    
+                }) {
                     HStack {
                         Image(systemName: "arrow.right.circle.fill")
                         Text("Send")
@@ -77,10 +82,13 @@ struct MoneyTransferView: View {
             .onTapGesture {
                         self.endEditing(true)  // This will dismiss the keyboard when tapping outside
                     }
+            .onAppear {
+                viewModel.raz()
+            }
         }
 }
 
 
 #Preview {
-    MoneyTransferView()
+   //MoneyTransferView()
 }
