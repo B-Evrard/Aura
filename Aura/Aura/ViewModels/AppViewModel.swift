@@ -17,7 +17,7 @@ class AppViewModel: ObservableObject {
     }
     
     lazy var authenticationViewModel: AuthenticationViewModel = {
-        return AuthenticationViewModel(apiService: APIClient()) { user in
+        return AuthenticationViewModel(apiService: APIClient.shared) { user in
             self.isLogged = true
             self.accountDetailViewModel.user = user
             self.moneyTransferViewModel.user = user
@@ -25,10 +25,10 @@ class AppViewModel: ObservableObject {
     }()
     
     lazy var accountDetailViewModel: AccountDetailViewModel = {
-        return AccountDetailViewModel(apiService: APIClient())
+        return AccountDetailViewModel(apiService: APIClient.shared)
     }()
     
     lazy var moneyTransferViewModel: MoneyTransferViewModel = {
-        return MoneyTransferViewModel(apiService: APIClient())
+        return MoneyTransferViewModel(apiService: APIClient.shared)
     }()
 }

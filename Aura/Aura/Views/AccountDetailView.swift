@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AccountDetailView: View {
+    
     @ObservedObject var viewModel: AccountDetailViewModel
     
     var body: some View {
@@ -51,7 +52,7 @@ struct AccountDetailView: View {
             
             // Button to see details of transactions
             Button(action: {
-                // Implement action to show transaction details
+                viewModel.setViewTransaction(true as Bool)
             }) {
                 HStack {
                     Image(systemName: "list.bullet")
@@ -62,7 +63,12 @@ struct AccountDetailView: View {
                 .foregroundColor(.white)
                 .cornerRadius(8)
             }
+            
+            .sheet(isPresented: $viewModel.viewTransaction) {
+                viewModel.initTransaction
+            }
             .padding([.horizontal, .bottom])
+            
             
             Spacer()
         }
@@ -75,7 +81,9 @@ struct AccountDetailView: View {
             }
             
         }
+       
     }
+    
         
 }
 

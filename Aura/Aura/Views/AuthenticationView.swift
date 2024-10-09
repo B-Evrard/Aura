@@ -68,6 +68,16 @@ struct AuthenticationView: View {
         .alert(viewModel.messageAlert, isPresented: $viewModel.isAlert  ) {
             Button("OK") { }
         }
+        .onAppear() {
+            #if DEBUG
+            // Connexion automatique en mode debug
+            viewModel.username = "test@aura.app"
+            viewModel.password = "test123"
+            Task {
+                await viewModel.login()
+            }
+            #endif
+        }
     }
     
 }

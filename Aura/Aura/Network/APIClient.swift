@@ -9,7 +9,7 @@ import Foundation
 
 final class APIClient: APIService {
     
-   
+   static let shared = APIClient()
     
     func authentication(user: User) async throws (APIError) -> User {
         let user: User = try await APIClientCore.fetchData(action: Action.auth, user: user).get()
