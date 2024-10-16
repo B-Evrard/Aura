@@ -12,10 +12,18 @@ class AccountDetailViewModel: ObservableObject {
     @Published var totalAmount: String = ""
     @Published var recentTransactions: [Transaction]
     
-    @Published var messageAlert: String = ""
+    @Published var messageAlert: String = "" {
+        didSet {
+            if messageAlert.isEmpty {
+                showAlert = false
+            }
+            else {
+                showAlert = true
+            }
+        }
+    }
+    @Published var showAlert: Bool = false
     @Published var viewTransaction: Bool = false
-    
-    
     
     private let apiService: APIService
     
@@ -32,34 +40,19 @@ class AccountDetailViewModel: ObservableObject {
     @MainActor
     func getAccount() async {
         self.messageAlert = ""
-        guard let user else { return }
+        guard let user else {
+            messageAlert = APIError.genericError().message
+            return }
         self.viewTransaction = false
         do {
             self.account = try await apiService.getAccount(user: user)
             self.totalAmount = account?.totalAmountFormatted ?? ""
-            self.recentTransactions = Array(account?.transactions.prefix(3) ?? [])
+            self.recentTransactions = Array(
+                account?.transactions?.prefix(3) ?? [])
             self.allTransactions = account?.transactions
         } catch {
             messageAlert = error.message
             return
         }
     }
-    
-    var isAlert: Bool {
-        get {return !messageAlert.isEmpty}
-        set {}
-    }
-    
-    func setViewTransaction(_ value: Bool) {
-        self.viewTransaction = value
-    }
-    
-    func isViewTransaction() -> Bool {
-        return self.viewTransaction
-    }
-    
-    var initTransaction: some View {
-        return TransactionsView(viewModel: TransactionsViewModel(transactions: self.allTransactions ?? []))
-    }
-    
 }

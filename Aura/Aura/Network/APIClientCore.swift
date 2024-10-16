@@ -9,14 +9,19 @@ import Foundation
 
 final class APIClientCore {
     
+    private let session: URLSessionProtocol
     
-    static func fetchData<T: Decodable>(action: Action, user: User ) async -> Result<T, APIError> {
+    init(session: URLSessionProtocol = URLSession.shared) {
+        self.session = session
+    }
+    
+    func fetchData<T: Decodable>(action: Action, user: User  ) async -> Result<T, APIError> {
         
         let url = action.api
         var request : URLRequest?
         request = URLRequest(url: url)
         
-       
+        
         switch action {
         case .auth:
             let body = "username=\(user.username)&password=\(user.password)"
@@ -25,7 +30,7 @@ final class APIClientCore {
             request?.addValue(user.token, forHTTPHeaderField: "token")
         case .transfer:
             request?.addValue(user.token, forHTTPHeaderField: "token")
-            guard let transfer = action.transfer else {
+            guard let transfer = action.toTransfer else {
                 return .failure(.genericError())
             }
             let body = "recipient=\(transfer.recipient)&amount=\(transfer.amount)"
@@ -37,7 +42,7 @@ final class APIClientCore {
             guard let request else {
                 return .failure(.genericError())
             }
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await session.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(.genericError())
@@ -52,7 +57,12 @@ final class APIClientCore {
                     }
                     var user = user
                     user.token = token["token"] ?? ""
-                    return .success(user as! T)
+                    guard let user = user as? T else {
+                        throw APIError.genericError()
+                    }
+                    return .success(user)
+                    
+                    
                     
                 case .account:
                     guard let account = try? JSONDecoder().decode(T.self, from: data) else {
@@ -61,7 +71,11 @@ final class APIClientCore {
                     return .success(account)
                     
                 case .transfer:
-                    return .success("OK" as! T)
+                    let result = "OK"
+                    guard let result = result as? T else {
+                        throw APIError.genericError()
+                    }
+                    return .success(result)
                     
                 }
             case 400:
@@ -72,7 +86,8 @@ final class APIClientCore {
                 throw APIError.invalidResponse()
             }
             
-            
+        } catch let apiError as APIError {
+            return .failure(apiError)
         } catch {
             return .failure(.genericError())
         }

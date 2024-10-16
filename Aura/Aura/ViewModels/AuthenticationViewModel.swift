@@ -10,20 +10,30 @@ import Foundation
 class AuthenticationViewModel: ObservableObject {
     @Published var username: String = ""
     @Published var password: String = ""
-
-    @Published var messageAlert: String = ""
-
+    
+    @Published var messageAlert: String = "" {
+        didSet {
+            if messageAlert.isEmpty {
+                showAlert = false
+            }
+            else {
+                showAlert = true
+            }
+        }
+    }
+    @Published var showAlert: Bool = false
+    
     @Published var user: User?
-
+    
     let onLoginSucceed: ((User) -> Void)
-
+    
     private let apiService: APIService
-
+    
     init(apiService: APIService, _ callback: @escaping (User) -> Void) {
         self.onLoginSucceed = callback
         self.apiService = apiService
     }
-
+    
     @MainActor
     func login() async {
         self.messageAlert = ""
@@ -40,14 +50,14 @@ class AuthenticationViewModel: ObservableObject {
             let userConnected = try await apiService.authentication(user: user)
             onLoginSucceed(
                 userConnected )
-
+            
         } catch {
             messageAlert = error.message
             return
         }
-
+        
     }
-
+    
     
     private func control() throws(LoginError) {
         do {
@@ -67,12 +77,8 @@ class AuthenticationViewModel: ObservableObject {
         if password.isEmpty {
             throw LoginError.passwordEmpty()
         }
-       
+        
         
     }
     
-    var isAlert: Bool {
-        get {return !messageAlert.isEmpty}
-        set {}
-    }
 }

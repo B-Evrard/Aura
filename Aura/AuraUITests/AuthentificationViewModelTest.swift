@@ -8,28 +8,102 @@
 import XCTest
 
 final class AuthentificationViewModelTest: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testControl() async {
+        
+        let session = MockUrlSession()
+        session.data = "{\"token\": \"fakeToken123\"}".data(using: .utf8)
+        session.urlResponse = HTTPURLResponse(url: Action.auth.api, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let mockApiClient = MockApiClient(session: session)
+        
+        let viewModel = AuthenticationViewModel(apiService: mockApiClient) { user in
+            XCTAssertEqual(user.token, "fakeToken123")
         }
+        
+        // username empty
+        viewModel.username = ""
+        viewModel.password = "test"
+        await viewModel.login()
+        var error: LoginError = .mailEmpty()
+        
+        XCTAssertTrue(viewModel.showAlert)
+        XCTAssertEqual(viewModel.messageAlert, error.message)
+        
+        // mail invalid
+        viewModel.username = "adressemail"
+        await viewModel.login()
+        error = .invalidFormatMail()
+        
+        XCTAssertTrue(viewModel.showAlert)
+        XCTAssertEqual(viewModel.messageAlert, error.message)
+        
+        // Password Empty
+        viewModel.username = "test@test.com"
+        viewModel.password = ""
+        await viewModel.login()
+        error = .passwordEmpty()
+        
+        XCTAssertTrue(viewModel.showAlert)
+        XCTAssertEqual(viewModel.messageAlert, error.message)
     }
-
+    
+    
+    func testLoginSuccess() async  {
+        
+        let session = MockUrlSession()
+        session.data = "{\"token\": \"fakeToken123\"}".data(using: .utf8)
+        session.urlResponse = HTTPURLResponse(url: Action.auth.api, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let mockApiClient = MockApiClient(session: session)
+        
+        let viewModel = AuthenticationViewModel(apiService: mockApiClient) { user in
+            XCTAssertEqual(user.token, "fakeToken123")
+        }
+        
+        // authentication success
+        viewModel.username = "test@aura.app"
+        viewModel.password = "test123"
+        await viewModel.login()
+        XCTAssertFalse(viewModel.showAlert)
+        XCTAssertEqual(viewModel.messageAlert, "")
+        
+    }
+    
+    func testLoginFailed() async {
+        
+        let session = MockUrlSession()
+        session.data = "{\"token\": \"fakeToken123\"}".data(using: .utf8)
+        session.urlResponse = HTTPURLResponse(url: Action.auth.api, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let mockApiClient = MockApiClient(session: session)
+        
+        let viewModel = AuthenticationViewModel(apiService: mockApiClient) { user in
+            XCTAssertEqual(user.token, "fakeToken123")
+        }
+        
+        viewModel.username = "test@aura.appa"
+        viewModel.password = "test123"
+        
+        // invalid json
+        session.data = "invalid Json".data(using: .utf8)
+        var apiError = APIError.genericError()
+        await viewModel.login()
+        XCTAssertTrue(viewModel.showAlert)
+        XCTAssertEqual(viewModel.messageAlert, apiError.message)
+        
+        
+        // authentication failed
+        session.data = "{\"error\": true},{\"reason\": \"Bad Request\"}".data(using: .utf8)
+        session.urlResponse = HTTPURLResponse(url: Action.auth.api, statusCode: 400, httpVersion: nil, headerFields: nil)
+        await viewModel.login()
+        apiError = APIError.authenticationFailed()
+        
+        XCTAssertTrue(viewModel.showAlert)
+        XCTAssertEqual(viewModel.messageAlert, apiError.message)
+    }
+    
 }
+
+
+
+
+
+

@@ -21,11 +21,11 @@ enum Action  {
         }
     }
     
-    var transfer: Transfer? {
+    var toTransfer: Transfer? {
         if case .transfer(let transfer) = self { return transfer } else { return nil }
     }
     
-    var api : URL {
+    var api: URL {
         switch self {
         case .auth: return Environment.baseURL.appendingPathComponent("auth")
         case .account: return Environment.baseURL.appendingPathComponent("account")

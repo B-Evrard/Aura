@@ -1,24 +1,21 @@
 //
-//  APIClient.swift
+//  MockApiClient.swift
 //  Aura
 //
-//  Created by Bruno Evrard on 20/09/2024.
+//  Created by Bruno Evrard on 09/10/2024.
 //
 
 import Foundation
 
-final class APIClient: APIService {
+final class MockApiClient: APIService {
     
-    
-    
-    private let session: URLSessionProtocol
-    
-    init(session: URLSessionProtocol = URLSession.shared) {
-        self.session = session
-    }
-    
+    var session: MockUrlSession
     var apiClientCore: APIClientCore {
         APIClientCore(session: session)
+    }
+    
+    init(session: MockUrlSession) {
+        self.session = session
     }
     
     func authentication(user: User) async throws (APIError) -> User {
@@ -34,11 +31,4 @@ final class APIClient: APIService {
     func transfer(user: User, transfer: Transfer) async throws (APIError) {
         let _: String = try await apiClientCore.fetchData(action: Action.transfer(transfer: transfer), user: user).get()
     }
-    
 }
-
-
-
-
-
-

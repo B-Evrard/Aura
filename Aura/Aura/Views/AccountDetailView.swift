@@ -52,7 +52,7 @@ struct AccountDetailView: View {
             
             // Button to see details of transactions
             Button(action: {
-                viewModel.setViewTransaction(true as Bool)
+                viewModel.viewTransaction = true
             }) {
                 HStack {
                     Image(systemName: "list.bullet")
@@ -65,7 +65,9 @@ struct AccountDetailView: View {
             }
             
             .sheet(isPresented: $viewModel.viewTransaction) {
-                viewModel.initTransaction
+                TransactionsView(
+                    viewModel: TransactionsViewModel(
+                        transactions: viewModel.allTransactions ?? []))
             }
             .padding([.horizontal, .bottom])
             
@@ -73,18 +75,21 @@ struct AccountDetailView: View {
             Spacer()
         }
         .onTapGesture {
-                    self.endEditing(true)  // This will dismiss the keyboard when tapping outside
-                }
+            self.endEditing(true)  // This will dismiss the keyboard when tapping outside
+        }
+        .alert(viewModel.messageAlert, isPresented: $viewModel.showAlert  ) {
+            Button("OK") { }
+        }
         .onAppear() {
             Task {
                 await viewModel.getAccount()
             }
             
         }
-       
+        
     }
     
-        
+    
 }
 
 #Preview {

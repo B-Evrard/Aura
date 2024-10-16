@@ -25,7 +25,7 @@ struct TransactionsView: View {
                     .foregroundColor(Color(hex: "#94A684"))
             }
             .padding(.top)
-           
+            
             List {
                 ForEach(viewModel.transactions, id: \.description) { transaction in
                     ZStack {
@@ -46,13 +46,13 @@ struct TransactionsView: View {
                     .listRowSeparator(.hidden)
                 }
             }
-           
+            
             .listStyle(PlainListStyle()) // Si tu veux un style de liste sans bordures
-          
-        }
             
         }
         
+    }
+    
 }
 
 #Preview {

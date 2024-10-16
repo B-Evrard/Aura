@@ -9,7 +9,6 @@ import Foundation
 
 protocol APIService {
     
-    static var shared: Self { get }
     
     func authentication(user: User) async throws (APIError) -> User
     

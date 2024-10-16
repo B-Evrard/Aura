@@ -15,11 +15,11 @@ struct User : Decodable {
 
 struct Account: Decodable {
     
-    var totalAmount: Double
-    var transactions: [Transaction]
+    var totalAmount: Double?
+    var transactions: [Transaction]?
     
     var totalAmountFormatted: String {
-        totalAmount.formattedTotalAmountFrench()
+        totalAmount?.formattedTotalAmountFrench() ?? ""
         
     }
     

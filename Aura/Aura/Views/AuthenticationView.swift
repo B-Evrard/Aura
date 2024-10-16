@@ -11,9 +11,9 @@ struct AuthenticationView: View {
     
     let gradientStart = Color(hex: "#94A684").opacity(0.7)
     let gradientEnd = Color(hex: "#94A684").opacity(0.0) // Fades to transparent
-
+    
     @ObservedObject var viewModel: AuthenticationViewModel
-
+    
     
     var body: some View {
         
@@ -65,18 +65,18 @@ struct AuthenticationView: View {
         .onTapGesture {
             self.endEditing(true)  // This will dismiss the keyboard when tapping outside
         }
-        .alert(viewModel.messageAlert, isPresented: $viewModel.isAlert  ) {
+        .alert(viewModel.messageAlert, isPresented: $viewModel.showAlert  ) {
             Button("OK") { }
         }
         .onAppear() {
-            #if DEBUG
+#if DEBUG
             // Connexion automatique en mode debug
-            viewModel.username = "test@aura.app"
-            viewModel.password = "test123"
-            Task {
-                await viewModel.login()
-            }
-            #endif
+            //viewModel.username = "test@aura.app"
+            //viewModel.password = "test123"
+            //Task {
+            //    await viewModel.login()
+            //}
+#endif
         }
     }
     

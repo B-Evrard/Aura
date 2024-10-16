@@ -12,6 +12,7 @@ class MoneyTransferViewModel: ObservableObject {
     @Published var recipient: String = ""
     @Published var amount: String = ""
     @Published var transferMessage: String = ""
+    @Published var transferSuccess: Bool = false
     
     private let apiService: APIService
     
@@ -25,6 +26,7 @@ class MoneyTransferViewModel: ObservableObject {
     func sendMoney() async {
         
         do {
+            transferSuccess = false
             try control()
         } catch {
             transferMessage = error.message
@@ -43,7 +45,7 @@ class MoneyTransferViewModel: ObservableObject {
             return
         }
         transferMessage = "Successfully transferred \(amount) to \(recipient)"
-        
+        transferSuccess = true
     }
     
     private func control() throws (TransferError) {
@@ -68,6 +70,7 @@ class MoneyTransferViewModel: ObservableObject {
     }
     
     func raz() {
+        transferSuccess = false
         recipient = ""
         amount = ""
         transferMessage = ""
