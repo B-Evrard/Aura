@@ -1,4 +1,4 @@
-# Formation Développeur d'application - iOS
+# Formation Développeur d'application - IOS
 
 ### Projet 5 -  Implémentez l'accès à des données (externes) pour une application IOS
 
